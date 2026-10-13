@@ -2,9 +2,9 @@
 
 **Eye Gym** è una webapp gratuita di esercizi occhi su schermo: inseguimento visivo e saccadi. Il nome «Gym» indica solo che si tratta di esercizi: l'app non rafforza i muscoli degli occhi, non migliora la vista, non cura e non sostituisce una visita ortottica o oculistica. Se compaiono vertigini, nausea, mal di testa o peggioramento della vista, fermati e rivolgiti a uno specialista.
 
-**Sito pubblico: <https://eniandreiacob-max.github.io/eye-gym/>**
+**Sito pubblico: <https://eniandreiacob-max.github.io/eyegym/>**
 
-Otto esercizi (orizzontale, verticale, cerchio, ellisse, otto, saccadi, zigzag e un misto imprevedibile), percorso a livelli, modalità lettere e modalità bambino, 6 lingue. HTML, CSS e JavaScript puri: nessun build, nessuna dipendenza, nessun cookie, nessun analytics, nessun dato che esce dal tuo browser (vedi la [pagina privacy](https://eniandreiacob-max.github.io/eye-gym/privacy.html)). Licenza [MIT](LICENSE).
+Otto esercizi (orizzontale, verticale, cerchio, ellisse, otto, saccadi, zigzag e un misto imprevedibile), percorso a livelli, modalità lettere e modalità bambino, 6 lingue. HTML, CSS e JavaScript puri: nessun build, nessuna dipendenza, nessun cookie, nessun analytics, nessun dato che esce dal tuo browser (vedi la [pagina privacy](https://eniandreiacob-max.github.io/eyegym/privacy.html)). Licenza [MIT](LICENSE).
 
 ## Come avviarla in locale
 
@@ -18,7 +18,7 @@ e poi apri <http://localhost:8000>.
 
 ## Pubblicazione e aggiornamenti
 
-Il sito è servito da **GitHub Pages** dal branch `main` (cartella radice) del repository [`eniandreiacob-max/eye-gym`](https://github.com/eniandreiacob-max/eye-gym). Non c'è nessun build: i file del repository sono il sito.
+Il sito è servito da **GitHub Pages** dal branch `main` (cartella radice) del repository [`eniandreiacob-max/eyegym`](https://github.com/eniandreiacob-max/eyegym). Non c'è nessun build: i file del repository sono il sito.
 
 **Aggiornare il sito:** modifica i file, controlla in locale, poi:
 
@@ -36,7 +36,7 @@ Dopo qualche decina di secondi GitHub Pages ripubblica da solo. Lo stato si vede
 node pubblico.mjs
 ```
 
-Tutti i percorsi sono relativi, quindi il sito funziona così com'è anche in una sottocartella (`/eye-gym/`). Se cambi il nome del repository o l'utente, aggiorna l'indirizzo in `index.html` (canonical, `og:url`, `og:image`, `twitter:image`), `privacy.html` (canonical), `sitemap.xml`, `robots.txt`, `404.html` e nei link del footer, poi rigenera il QR se serve.
+Tutti i percorsi sono relativi, quindi il sito funziona così com'è anche in una sottocartella (`/eyegym/`). Se cambi il nome del repository o l'utente, aggiorna l'indirizzo in `index.html` (canonical, `og:url`, `og:image`, `twitter:image`), `privacy.html` (canonical), `sitemap.xml`, `robots.txt`, `404.html` e nei link del footer, poi rigenera il QR se serve.
 
 File di servizio del sito: `favicon.svg`, `og-image.png` (anteprima per i social, 1200×630, generata da `tools/genera-og.mjs`), `robots.txt` (consente tutto), `sitemap.xml`, `404.html` (autonoma, funziona da qualsiasi indirizzo), `.nojekyll`. Le cartelle `tests/` e `tools/` sono solo per sviluppo; pubblicate insieme al resto, non fanno parte dell'app.
 
@@ -211,7 +211,7 @@ cd tests && npm test
 - `lingue.mjs`: le 6 lingue complete e senza testi rimasti in un'altra lingua, scelta automatica dal browser, cambio al volo, lettere e risposte in cinese e hindi.
 - `velocita.mjs`: velocità in gradi uguale su schermi diversi, calibrazione con la carta, distanza e limite di ±20°.
 - `accessibilita.mjs`: axe-core (WCAG 2.1 AA e buone pratiche) su tutte le schermate in tema scuro e chiaro, anche in cinese e hindi, più uso da tastiera e anello di focus.
-- `sottocartella.mjs`: imita GitHub Pages (sito in `/eye-gym/`, 404 vera) e verifica percorsi relativi, meta tag, esercizi, riposo, donazione e QR.
+- `sottocartella.mjs`: imita GitHub Pages (sito in `/eyegym/`, 404 vera) e verifica percorsi relativi, meta tag, esercizi, riposo, donazione e QR.
 - `pubblico.mjs`: gli stessi controlli sul sito realmente pubblicato (`node pubblico.mjs [indirizzo]`).
 - `donazione.mjs`: pulsante e QR solo nel footer e nel riposo (mai durante l'esercizio), QR decodificato e identico a `DONATE_URL`, tutto nascosto se il link è vuoto, nessuna risorsa esterna.
 - `anteprime.mjs`: anteprime animate delle icone (mouse, tastiera, touch, riduci movimento) e pallino sempre sul tracciato disegnato.

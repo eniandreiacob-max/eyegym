@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const DONATE_URL = readFileSync(join(RADICE, 'app.js'), 'utf8').match(/const DONATE_URL = '([^']*)';/)[1];
-export const SITO_ATTESO = 'https://eniandreiacob-max.github.io/eye-gym/';
+export const SITO_ATTESO = 'https://eniandreiacob-max.github.io/eyegym/';
 const TITOLO = 'Eye Gym – allenamento del movimento oculare';
 const DESCRIZIONE = 'Esercizi gratuiti su schermo per allenare inseguimento visivo e saccadi. Non è una cura né sostituisce una visita.';
 const ESERCIZI = ['orizzontale', 'verticale', 'cerchio', 'ellisse', 'otto', 'saccadi', 'zigzag', 'misto'];
@@ -79,7 +79,7 @@ export async function controlla(base, { pubblico = false, shots = '.' } = {}) {
     ok(/width=device-width/.test(await meta('meta[name=viewport]')), 'meta viewport');
     ok(!!(await meta('meta[name=theme-color]')), `theme-color ${await meta('meta[name=theme-color]')}`);
     const canonico = await meta('link[rel=canonical]', 'href');
-    ok(/^https:\/\/.+\/eye-gym\/$/.test(canonico), `canonical ${canonico}`);
+    ok(/^https:\/\/.+\/eyegym\/$/.test(canonico), `canonical ${canonico}`);
     const ogTag = {};
     for (const p of ['title', 'description', 'url', 'image', 'type', 'site_name', 'locale']) ogTag[p] = await meta(`meta[property="og:${p}"]`);
     ok(ogTag.title === TITOLO && ogTag.description === DESCRIZIONE && ogTag.url === canonico && ogTag.image === `${canonico}og-image.png` && ogTag.type === 'website' && ogTag.site_name === 'Eye Gym', 'Open Graph completo e coerente col canonical');
@@ -93,7 +93,7 @@ export async function controlla(base, { pubblico = false, shots = '.' } = {}) {
     ok(esterne.length === 0, `nessuna risorsa da altri siti${esterne.length ? ': ' + esterne.join(', ') : ''}`);
     if (pubblico) ok(page.richieste.every((u) => u.startsWith('https://')), 'solo richieste https');
     const href = await page.locator('.piede__link a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
-    ok(href.includes('privacy.html') && href.some((h) => /github\.com\/.+\/eye-gym$/.test(h)) && href.some((h) => /github\.com\/.+\/eye-gym\/blob\/main\/LICENSE$/.test(h)), `footer: privacy, repository, licenza (${href.join(', ')})`);
+    ok(href.includes('privacy.html') && href.some((h) => /github\.com\/.+\/eyegym$/.test(h)) && href.some((h) => /github\.com\/.+\/eyegym\/blob\/main\/LICENSE$/.test(h)), `footer: privacy, repository, licenza (${href.join(', ')})`);
     ok(await page.locator('.piede__link a[target=_blank]').evaluateAll((as) => as.every((a) => /noopener/.test(a.rel) && /noreferrer/.test(a.rel))), 'link esterni con rel="noopener noreferrer"');
     ok(page.err.length === 0, 'nessun errore in console' + (page.err.length ? ': ' + page.err.join(' | ') : ''));
     await page.screenshot({ path: join(shots, pubblico ? 'pubblico-home.png' : 'sottocartella-home.png'), fullPage: true });
