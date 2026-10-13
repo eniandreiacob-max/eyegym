@@ -1,0 +1,16 @@
+{
+  "name": "eye-gym-tools",
+  "private": true,
+  "type": "module",
+  "description": "Strumenti di sviluppo: generano file statici. Il sito pubblicato non li usa e non ha dipendenze.",
+  "scripts": {
+    "qr": "node genera-qr.mjs",
+    "og": "node genera-og.mjs"
+  },
+  "dependencies": {
+    "qrcode": "1.5.4"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0"
+  }
+}

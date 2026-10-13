@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eye Gym – pagina non trovata</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a0b0e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0b0e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23e2c17c'/%3E%3Ccircle cx='32' cy='32' r='3.6' fill='%230a0b0e'/%3E%3C/svg%3E">
+  <!-- Pagina autonoma: stile e testi sono qui dentro perché GitHub Pages la serve da indirizzi a qualunque profondità,
+       dove i percorsi relativi a style.css o testi.js non funzionerebbero. -->
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; text-align: center;
+      background: radial-gradient(900px 480px at 20% -10%, rgba(226, 193, 124, .12), transparent 60%), #0a0b0e;
+      color: #f2efe8; font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Nirmala UI", sans-serif;
+    }
+    .punto { width: 56px; height: 56px; margin: 0 auto 28px; border-radius: 50%; background: radial-gradient(circle, #0a0b0e 0 16%, #e2c17c 17% 100%); box-shadow: 0 0 0 10px rgba(226, 193, 124, .12); }
+    .codice { font: 600 .8rem ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #a6a39c; }
+    h1 { font: 400 clamp(2rem, 6vw, 3rem)/1.1 ui-serif, "New York", "Iowan Old Style", Georgia, "Songti SC", "Noto Serif", serif; letter-spacing: -.02em; margin: 8px 0 12px; }
+    p { margin: 0 0 28px; color: #a6a39c; }
+    a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; border-radius: 999px; font-weight: 600; text-decoration: none; color: #1b1407; background: linear-gradient(180deg, #f5dca6, #dcb56b); }
+    a:focus-visible { outline: 2px solid #e2c17c; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="punto" aria-hidden="true"></div>
+    <div class="codice">404</div>
+    <h1 id="titolo">Pagina non trovata</h1>
+    <p id="testo">L'indirizzo che hai aperto non esiste.</p>
+    <a id="torna" href="https://eniandreiacob-max.github.io/eye-gym/">Torna a Eye Gym</a>
+  </main>
+  <script>
+    (function () {
+      var T = {
+        it: ['Pagina non trovata', "L'indirizzo che hai aperto non esiste.", 'Torna a Eye Gym', 'Eye Gym – pagina non trovata'],
+        en: ['Page not found', 'The address you opened does not exist.', 'Back to Eye Gym', 'Eye Gym – page not found'],
+        zh: ['找不到页面', '你打开的地址不存在。', '返回 Eye Gym', 'Eye Gym – 找不到页面'],
+        hi: ['पेज नहीं मिला', 'आपने जो पता खोला वह मौजूद नहीं है।', 'Eye Gym पर वापस जाएँ', 'Eye Gym – पेज नहीं मिला'],
+        es: ['Página no encontrada', 'La dirección que has abierto no existe.', 'Volver a Eye Gym', 'Eye Gym – página no encontrada'],
+        fr: ['Page introuvable', "L'adresse que vous avez ouverte n'existe pas.", 'Retour à Eye Gym', 'Eye Gym – page introuvable']
+      };
+      var lingua = null;
+      try { lingua = JSON.parse(localStorage.getItem('etr.impostazioni') || '{}').lingua; } catch (e) {}
+      if (!T[lingua]) {
+        var elenco = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+        lingua = 'en';
+        for (var i = 0; i < elenco.length; i++) { var c = String(elenco[i]).toLowerCase().split('-')[0]; if (T[c]) { lingua = c; break; } }
+      }
+      var t = T[lingua];
+      document.documentElement.lang = lingua === 'zh' ? 'zh-Hans' : lingua;
+      document.getElementById('titolo').textContent = t[0];
+      document.getElementById('testo').textContent = t[1];
+      document.getElementById('torna').textContent = t[2];
+      document.title = t[3];
+    })();
+  </script>
+</body>
+</html>

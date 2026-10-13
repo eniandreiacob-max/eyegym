@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eye Gym – allenamento del movimento oculare</title>
+  <meta name="description" content="Esercizi gratuiti su schermo per allenare inseguimento visivo e saccadi. Non è una cura né sostituisce una visita.">
+  <meta name="keywords" content="esercizi occhi, inseguimento visivo, saccadi, movimento oculare, esercizi per gli occhi">
+  <meta name="theme-color" content="#0a0b0e">
+  <link rel="canonical" href="https://eniandreiacob-max.github.io/eye-gym/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Eye Gym">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Eye Gym – allenamento del movimento oculare">
+  <meta property="og:description" content="Esercizi gratuiti su schermo per allenare inseguimento visivo e saccadi. Non è una cura né sostituisce una visita.">
+  <meta property="og:url" content="https://eniandreiacob-max.github.io/eye-gym/">
+  <meta property="og:image" content="https://eniandreiacob-max.github.io/eye-gym/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Eye Gym: un punto dorato su sfondo scuro che percorre un tracciato a otto">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Eye Gym – allenamento del movimento oculare">
+  <meta name="twitter:description" content="Esercizi gratuiti su schermo per allenare inseguimento visivo e saccadi. Non è una cura né sostituisce una visita.">
+  <meta name="twitter:image" content="https://eniandreiacob-max.github.io/eye-gym/og-image.png">
+  <meta name="twitter:image:alt" content="Eye Gym: un punto dorato su sfondo scuro che percorre un tracciato a otto">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- I testi tra i tag sono quelli italiani di partenza: testi.js li sostituisce nella lingua scelta.
+       data-t = testo semplice, data-t-html = testo con <strong>, data-t-attr = attributi ("nome=chiave;..."),
+       data-t-arg = numero passato ai testi che lo contengono. -->
+  <a class="salta" href="#principale" data-t="salta">Vai al contenuto</a>
+
+  <header class="testata">
+    <div class="marchio">
+      <svg class="marchio__segno" viewBox="0 0 32 32" aria-hidden="true">
+        <circle class="marchio__anello" cx="16" cy="16" r="15"/>
+        <path class="marchio__occhio" d="M5 16c3.2-5.2 6.9-7.8 11-7.8s7.8 2.6 11 7.8c-3.2 5.2-6.9 7.8-11 7.8S8.2 21.2 5 16z"/>
+        <circle class="marchio__pupilla" cx="16" cy="16" r="3.4"/>
+      </svg>
+      <h1 data-t="app.titolo">Eye Gym</h1>
+    </div>
+    <nav aria-label="Sezioni dell'app" data-t-attr="aria-label=nav.aria" class="schede">
+      <button type="button" class="tab" data-vista="allenamento" aria-current="page" data-t="tab.allenamento">Allenamento libero</button>
+      <button type="button" class="tab" data-vista="percorso" data-t="tab.percorso">Percorso</button>
+      <button type="button" class="tab" data-vista="progressi" data-t="tab.progressi">Progressi</button>
+    </nav>
+    <label for="lingua" class="solo-lettori" data-t="lingua">Lingua</label>
+    <select id="lingua" class="lingua"></select>
+    <button type="button" id="btn-tema" class="btn btn--leggero">Tema chiaro</button>
+  </header>
+
+  <main id="principale" class="contenitore">
+
+    <!-- Avvisi comuni a allenamento libero e percorso -->
+    <div id="avviso-movimento" class="nota nota--attenzione" hidden>
+      <strong data-t="movimentoRidotto.titolo">Movimenti ridotti attivi sul dispositivo.</strong>
+      <span data-t="movimentoRidotto.testo">Gli esercizi si basano su un bersaglio che si muove sullo schermo: prima di partire ti chiederemo conferma.</span>
+    </div>
+
+    <div id="blocco-riposo" class="nota nota--info" role="status" hidden>
+      <strong data-t="bloccoRiposo.titolo">Riposo in corso.</strong>
+      <span id="blocco-riposo-testo"></span>
+    </div>
+
+    <p id="esito" class="nota nota--esito" role="status" hidden></p>
+
+    <!-- ============ ALLENAMENTO LIBERO ============ -->
+    <section id="vista-allenamento" aria-labelledby="t-allenamento">
+      <div class="eroe">
+        <h2 id="t-allenamento" class="eroe__titolo" data-t="prepara">Prepara la sessione</h2>
+        <p class="eroe__testo" data-t="meta.descrizione">Esercizi gratuiti su schermo per allenare inseguimento visivo e saccadi. Non è una cura né sostituisce una visita.</p>
+        <p class="eroe__parole" data-t="eroe.parole">Esercizi occhi gratuiti: inseguimento visivo, saccadi e altri tracciati, a testa ferma.</p>
+      </div>
+
+      <div class="griglia">
+        <form id="impostazioni" class="pannello" autocomplete="off" novalidate>
+          <fieldset class="esercizi">
+            <legend data-t="esercizio">Esercizio</legend>
+
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="orizzontale">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 16h24"/><circle class="pieno" cx="21" cy="16" r="2.6"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.orizzontale">Orizzontale</span></span>
+              <span class="scheda__testo" data-t="scheda.orizzontale.testo">Inseguimento lento destra-sinistra: esercita il movimento laterale degli occhi. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="verticale">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v24"/><circle class="pieno" cx="16" cy="11" r="2.6"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.verticale">Verticale</span></span>
+              <span class="scheda__testo" data-t="scheda.verticale.testo">Inseguimento lento su-giù: esercita il movimento verticale degli occhi. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="cerchio">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="10"/><circle class="pieno" cx="26" cy="16" r="2.6"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.cerchio">Cerchio</span></span>
+              <span class="scheda__testo" data-t="scheda.cerchio.testo">Inseguimento su traiettoria circolare: esercita il passaggio continuo tra tutte le direzioni. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="ellisse">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="12.5" ry="7"/><circle class="pieno" cx="28.5" cy="16" r="2.6"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.ellisse">Ellisse</span></span>
+              <span class="scheda__testo" data-t="scheda.ellisse.testo">Inseguimento su un ovale più largo che alto: esercita il movimento circolare con ampiezze diverse in orizzontale e in verticale. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="otto">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 16c3-4.4 5.8-6.6 8.4-6.6 2.6 0 4.1 2.6 4.1 6.6s-1.5 6.6-4.1 6.6c-2.6 0-5.4-2.2-8.4-6.6s-5.8-6.6-8.4-6.6c-2.6 0-4.1 2.6-4.1 6.6s1.5 6.6 4.1 6.6c2.6 0 5.4-2.2 8.4-6.6z"/><circle class="pieno" cx="16" cy="16" r="2.4"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.otto">Otto (infinito)</span></span>
+              <span class="scheda__testo" data-t="scheda.otto.testo">Inseguimento a forma di otto: esercita i cambi di direzione e l'incrocio al centro. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="saccadi">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><path d="M7 23 15 9l8 10 3.5-11" stroke-dasharray="1.4 3.2"/><circle class="pieno" cx="7" cy="23" r="2"/><circle class="pieno" cx="15" cy="9" r="2"/><circle class="pieno" cx="23" cy="19" r="2"/><circle class="pieno" cx="26.5" cy="8" r="2.7"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.saccadi">Saccadi</span></span>
+              <span class="scheda__testo" data-t="scheda.saccadi.testo">Il punto salta in posizioni casuali: esercita gli spostamenti rapidi e precisi dello sguardo. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="zigzag">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><path d="M3.5 21.5 8.5 10.5l5 11 5-11 5 11 5-11"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.zigzag">Zigzag</span></span>
+              <span class="scheda__testo" data-t="scheda.zigzag.testo">Percorso a zigzag con inversioni nette di direzione: esercita i cambi rapidi tra su e giù mentre lo sguardo avanza. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+            <label class="scheda">
+              <input type="radio" name="esercizio" value="misto">
+              <svg class="scheda__icona" viewBox="0 0 32 32" aria-hidden="true"><circle cx="11.5" cy="11.5" r="6"/><path d="M15 25l3.5-5.5L22 25l3.5-5.5"/><path d="M4 25.5h7"/></svg>
+              <span class="scheda__titolo"><span data-t="scheda.misto">Misto</span></span>
+              <span class="scheda__testo" data-t="scheda.misto.testo">Combina più direzioni nella stessa sessione: il bersaglio passa da un tracciato all'altro. Esercita i cambi di direzione. Testa ferma, si muovono solo gli occhi.</span>
+            </label>
+          </fieldset>
+
+          <fieldset id="opzioni-misto" class="misto" hidden>
+            <legend data-t="misto.legenda">Tracciati da combinare</legend>
+            <div class="spunte">
+              <label><input type="checkbox" name="misto" value="orizzontale"> <span data-t="tr.orizzontale">Orizzontale</span></label>
+              <label><input type="checkbox" name="misto" value="verticale"> <span data-t="tr.verticale">Verticale</span></label>
+              <label><input type="checkbox" name="misto" value="diagonale_su"> <span data-t="tr.diagonale_su">Diagonale /</span></label>
+              <label><input type="checkbox" name="misto" value="diagonale_giu"> <span data-t="tr.diagonale_giu">Diagonale \</span></label>
+              <label><input type="checkbox" name="misto" value="cerchio"> <span data-t="tr.cerchio">Cerchio</span></label>
+              <label><input type="checkbox" name="misto" value="ellisse"> <span data-t="tr.ellisse">Ellisse</span></label>
+              <label><input type="checkbox" name="misto" value="otto"> <span data-t="tr.otto">Otto</span></label>
+              <label><input type="checkbox" name="misto" value="zigzag"> <span data-t="tr.zigzag">Zigzag</span></label>
+              <label><input type="checkbox" name="misto" value="saccadi"> <span data-t="tr.saccadi">Saccadi</span></label>
+            </div>
+            <p id="aiuto-misto" class="aiuto" data-t="misto.aiuto">Scegline almeno due. L'ordine è imprevedibile: il tracciato successivo, il punto da cui riparte, il verso e la durata cambiano ogni volta a caso. Tra un tracciato e l'altro il bersaglio scivola senza salti.</p>
+            <div class="campo">
+              <label for="cambio" data-t="misto.cambio">Cambia tracciato in media ogni</label>
+              <select id="cambio">
+                <option value="10" data-t="secondi" data-t-arg="10">10 secondi</option>
+                <option value="20" data-t="secondi" data-t-arg="20">20 secondi</option>
+                <option value="30" data-t="secondi" data-t-arg="30">30 secondi</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <div class="campo">
+            <div class="campo__riga">
+              <label for="velocita" id="etichetta-velocita">Velocità</label>
+              <output for="velocita" id="velocita-val" class="num">3 / 10</output>
+            </div>
+            <input type="range" id="velocita" min="1" max="10" step="1" value="3" aria-describedby="aiuto-velocita">
+            <p id="aiuto-velocita" class="aiuto" data-t="velocita.aiuto">1 = molto lenta, 10 = veloce. La velocità è in gradi al secondo dello sguardo, quindi è la stessa su ogni schermo. Parti piano.</p>
+          </div>
+
+          <div class="campo" id="campo-dimensione">
+            <div class="campo__riga">
+              <label for="dimensione" data-t="dimensione">Dimensione del bersaglio</label>
+              <output for="dimensione" id="dimensione-val" class="num">32 px</output>
+            </div>
+            <input type="range" id="dimensione" min="12" max="80" step="2" value="32">
+            <div class="anteprima" aria-hidden="true"><span id="anteprima-bersaglio"></span></div>
+          </div>
+
+          <div class="campo">
+            <label for="durata" data-t="durata">Durata della sessione</label>
+            <select id="durata" aria-describedby="aiuto-durata">
+              <option value="2" data-t="minuti" data-t-arg="2">2 minuti</option>
+              <option value="3" data-t="minuti" data-t-arg="3">3 minuti</option>
+              <option value="5" data-t="minuti" data-t-arg="5">5 minuti</option>
+              <option value="10" data-t="minuti.massimo" data-t-arg="10">10 minuti (massimo)</option>
+            </select>
+            <p id="aiuto-durata" class="aiuto" data-t="durata.aiuto">Alla fine parte una pausa di riposo della stessa durata.</p>
+          </div>
+
+          <details id="calibrazione" class="opzioni">
+            <summary data-t="schermo">Schermo e distanza</summary>
+            <div class="campo">
+              <label for="distanza" data-t="distanza">Distanza dei tuoi occhi dallo schermo</label>
+              <select id="distanza">
+                <option value="40" data-t="distanza.tablet" data-t-arg="40">40 cm (tablet)</option>
+                <option value="50" data-t="cm" data-t-arg="50">50 cm</option>
+                <option value="60" data-t="cm" data-t-arg="60">60 cm</option>
+                <option value="70" data-t="cm" data-t-arg="70">70 cm</option>
+              </select>
+            </div>
+            <div class="campo">
+              <div class="campo__riga">
+                <label for="carta" data-t="calibra">Calibra lo schermo</label>
+                <button type="button" id="btn-ripristina-calibrazione" class="btn btn--leggero btn--piccolo" data-t="calibra.stima">Usa la stima</button>
+              </div>
+              <p class="aiuto" data-t="calibra.aiuto">Appoggia una carta di credito o la tessera sanitaria sul rettangolo e muovi lo slider finché hanno la stessa larghezza (con lo zoom del browser al 100%). Serve perché la velocità sia davvero in gradi.</p>
+              <input type="range" id="carta" min="160" max="640" step="1" value="324">
+              <div class="carta-area" aria-hidden="true"><div id="carta-rettangolo" class="carta"></div></div>
+              <p id="larghezza-schermo" class="aiuto" role="status"></p>
+            </div>
+          </details>
+
+          <details id="opzioni-facoltative" class="opzioni">
+            <summary><span data-t="opzioni">Opzioni facoltative</span><span id="opzioni-attive"></span></summary>
+            <div class="campo campo--spunta">
+              <input type="checkbox" id="progressiva" aria-describedby="aiuto-progressiva">
+              <label for="progressiva" data-t="progressiva">Modalità progressiva</label>
+              <p id="aiuto-progressiva" class="aiuto" data-t="progressiva.aiuto">Si parte dal livello 1 e la velocità sale di un livello ogni 30 secondi, fino alla velocità scelta qui sopra.</p>
+            </div>
+
+            <div class="campo campo--spunta">
+              <input type="checkbox" id="dimensione-variabile" aria-describedby="aiuto-dimensione-variabile">
+              <label for="dimensione-variabile" data-t="dimVar">Dimensione variabile</label>
+              <p id="aiuto-dimensione-variabile" class="aiuto" data-t="dimVar.aiuto">Durante l'esercizio il bersaglio si ingrandisce e si rimpicciolisce lentamente tra un minimo e un massimo che scegli tu (un ciclo ogni 10 secondi, parte dal minimo).</p>
+            </div>
+
+            <fieldset id="opzioni-dimensione-variabile" class="misto" hidden>
+              <legend data-t="dimVar.legenda">Intervallo di dimensione</legend>
+              <div class="campo">
+                <div class="campo__riga">
+                  <label for="dimensione-min" data-t="dimVar.minima">Minima</label>
+                  <output for="dimensione-min" id="dimensione-min-val" class="num">16 px</output>
+                </div>
+                <input type="range" id="dimensione-min" min="12" max="80" step="2" value="16">
+              </div>
+              <div class="campo">
+                <div class="campo__riga">
+                  <label for="dimensione-max" data-t="dimVar.massima">Massima</label>
+                  <output for="dimensione-max" id="dimensione-max-val" class="num">48 px</output>
+                </div>
+                <input type="range" id="dimensione-max" min="12" max="80" step="2" value="48">
+              </div>
+              <div class="anteprima" aria-hidden="true"><span id="anteprima-min"></span><span id="anteprima-max"></span></div>
+              <p class="aiuto" data-t="dimVar.nota">La minima non può superare la massima. Con le lettere il bersaglio non scende sotto i 48 px, con il razzo sotto i 64 px.</p>
+            </fieldset>
+
+            <div class="campo campo--spunta">
+              <input type="checkbox" id="lettere" aria-describedby="aiuto-lettere">
+              <label for="lettere" data-t="lettere">Lettere sul bersaglio</label>
+              <p id="aiuto-lettere" class="aiuto" data-t="lettere.aiuto">Sul bersaglio compaiono lettere che cambiano: seguile con lo sguardo. Alla fine della sessione devi indovinare la frase. Il bersaglio è almeno 48 px.</p>
+            </div>
+            <div id="opzioni-lettere" class="campo" hidden>
+              <label for="passo-lettere" data-t="lettere.passo">Cambio lettera ogni</label>
+              <select id="passo-lettere">
+                <option value="1" data-t="secondi" data-t-arg="1">1 secondo</option>
+                <option value="1.5" data-t="secondi" data-t-arg="1.5">1,5 secondi</option>
+                <option value="2" data-t="secondi" data-t-arg="2">2 secondi</option>
+              </select>
+            </div>
+
+            <div class="campo campo--spunta">
+              <input type="checkbox" id="bambino" aria-describedby="aiuto-bambino">
+              <label for="bambino" data-t="bambino">Modalità bambino: segui il razzo</label>
+              <p id="aiuto-bambino" class="aiuto" data-t="bambino.aiuto">Il bersaglio diventa un razzo con la fiamma, che punta dove sta andando, sullo sfondo di stelle. Alla fine c'è una domanda creativa senza risposte giuste o sbagliate: più idee diverse trovi, meglio è. Il razzo è almeno 64 px. Non si combina con le lettere. Meglio con un adulto vicino.</p>
+            </div>
+          </details>
+
+          <button type="submit" id="btn-avvia" class="btn btn--primario" data-t="avvia">Inizia la sessione</button>
+        </form>
+
+        <aside class="laterale" aria-label="Prima di iniziare" data-t-attr="aria-label=prima">
+          <div class="pannello">
+            <h3 data-t="prima">Prima di iniziare</h3>
+            <ul class="elenco">
+              <li data-t-html="prima.1"><strong>Distanza: 50–70 cm</strong> dallo schermo, circa la lunghezza di un braccio teso.</li>
+              <li data-t="prima.2">Schermo all'altezza degli occhi, stanza ben illuminata.</li>
+              <li data-t="prima.3">Testa ferma: si muovono solo gli occhi. Se usi occhiali o lenti, tienili.</li>
+              <li data-t="prima.4">Respira normalmente e sbatti le palpebre quando serve.</li>
+            </ul>
+          </div>
+          <div class="pannello">
+            <h3 data-t="tasti">Scorciatoie in sessione</h3>
+            <ul class="elenco elenco--tasti">
+              <li><kbd data-t="tasti.spazio">Spazio</kbd> <span data-t="tasti.spazio.testo">pausa / riprendi</span></li>
+              <li><kbd data-t="tasti.esc">Esc</kbd> <span data-t="tasti.esc.testo">ferma la sessione</span></li>
+              <li><kbd>F</kbd> <span data-t="tasti.f.testo">schermo intero</span></li>
+              <li><kbd data-t="tasti.tocco">Tocco</kbd> <span data-t="tasti.tocco.testo">mostra i comandi per 3 secondi</span></li>
+            </ul>
+          </div>
+          <p class="nota nota--info" data-t-html="avvertenza"><strong>Attenzione.</strong> Se compaiono vertigini, nausea, mal di testa o peggioramento della vista, fermati. Se i sintomi persistono, rivolgiti a un ortottista o a un oculista. L'app non cura e non corregge miopia o altri difetti: è solo un esercizio della motilità oculare. Il nome «Gym» indica solo che si tratta di esercizi: non rafforza i muscoli degli occhi e non migliora la vista.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ PERCORSO A LIVELLI ============ -->
+    <section id="vista-percorso" aria-labelledby="t-percorso" hidden>
+      <h2 id="t-percorso" data-t="percorso.titolo">Percorso a livelli</h2>
+      <p data-t="percorso.intro">Dal facile al difficile: ogni livello ha esercizio, velocità, dimensione del bersaglio e durata già impostati. Un livello si completa solo portando a termine tutta la sessione; il livello successivo si sblocca da solo. Dopo ogni sessione c'è il riposo.</p>
+      <p class="percorso__stato"><strong id="percorso-conteggio" class="num">0 / 0</strong> <span data-t="percorso.completati">livelli completati</span></p>
+      <div class="barra-percorso" aria-hidden="true"><div id="percorso-barra"></div></div>
+      <div id="percorso-elenco"></div>
+      <p><button type="button" id="btn-azzera-percorso" class="btn btn--leggero" data-t="percorso.azzera">Ricomincia il percorso da capo</button></p>
+    </section>
+
+    <!-- ============ PROGRESSI ============ -->
+    <section id="vista-progressi" aria-labelledby="t-progressi" hidden>
+      <h2 id="t-progressi" data-t="progressi.titolo">Progressi</h2>
+
+      <div class="totali">
+        <p><span id="tot-minuti" class="grande num">0</span> <span data-t="progressi.minuti">minuti totali</span></p>
+        <p><span id="tot-sessioni" class="grande num">0</span> <span data-t="progressi.sessioni">sessioni</span></p>
+      </div>
+
+      <figure class="pannello">
+        <figcaption data-t="grafico">Sessioni per giorno, ultimi 14 giorni</figcaption>
+        <canvas id="grafico" role="img" aria-label="Grafico delle sessioni degli ultimi 14 giorni"></canvas>
+      </figure>
+
+      <div class="pannello">
+        <h3 data-t="ultime">Ultime sessioni</h3>
+        <p id="nessuna-sessione" class="aiuto" data-t="nessuna">Nessuna sessione registrata. Completane una e comparirà qui.</p>
+        <div class="tabella-scroll">
+          <table id="tabella-sessioni" hidden>
+            <thead>
+              <tr><th scope="col" data-t="th.data">Data</th><th scope="col" data-t="th.esercizio">Esercizio</th><th scope="col" data-t="th.velocita">Velocità</th><th scope="col" data-t="th.durata">Durata</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p><button type="button" id="btn-cancella" class="btn btn--pericolo" data-t="cancella">Cancella i dati dei progressi</button></p>
+    </section>
+  </main>
+
+  <footer class="piede">
+    <section class="dona" aria-labelledby="dona-t-piede" hidden>
+      <div class="dona__corpo">
+        <h2 id="dona-t-piede" class="dona__titolo" data-t="dona.titolo">Eye Gym è gratuita</h2>
+        <p data-t="dona.testo">Eye Gym è gratuita e resta gratuita. Se ti è utile e ti va, puoi fare una donazione volontaria: non sblocca nulla e l'app funziona esattamente come prima.</p>
+        <p class="dona__nota" data-t="dona.nota">Il pulsante e il QR portano a PayPal, un servizio esterno con le sue regole.</p>
+        <a class="btn btn--leggero dona__bottone" href="#" target="_blank" rel="noopener noreferrer"><span data-t="dona.bottone">Dona con PayPal</span><span class="solo-lettori" data-t="dona.nuovaScheda"> (si apre in una nuova scheda)</span></a>
+      </div>
+      <figure class="dona__qr">
+        <div class="qr"><img src="qr-donazione.svg" width="124" height="124" alt="QR code che porta alla pagina di donazione PayPal di Eye Gym" data-t-attr="alt=dona.qr.alt"></div>
+        <figcaption data-t="dona.qr">Inquadra con il telefono per donare via PayPal</figcaption>
+      </figure>
+    </section>
+    <nav class="piede__link" data-t-attr="aria-label=piede.aria" aria-label="Informazioni">
+      <span class="piede__nome">Eye Gym</span>
+      <a href="privacy.html" data-t="piede.privacy">Privacy</a>
+      <a href="https://github.com/eniandreiacob-max/eye-gym" target="_blank" rel="noopener noreferrer"><span data-t="piede.repo">Repository GitHub</span><span class="solo-lettori" data-t="dona.nuovaScheda"> (si apre in una nuova scheda)</span></a>
+      <a href="https://github.com/eniandreiacob-max/eye-gym/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><span data-t="piede.licenza">Licenza MIT</span><span class="solo-lettori" data-t="dona.nuovaScheda"> (si apre in una nuova scheda)</span></a>
+    </nav>
+  </footer>
+
+  <!-- ============ PALCO: sessione, conto alla rovescia, pausa, riposo ============ -->
+  <div id="palco" class="palco" tabindex="-1" hidden>
+    <canvas id="canvas" aria-hidden="true"></canvas>
+
+    <div id="hud" class="hud" role="group" aria-label="Controlli della sessione" data-t-attr="aria-label=hud.aria">
+      <span id="hud-esercizio" class="hud__voce"></span>
+      <span class="hud__voce"><span data-t="hud.tempo">Tempo</span> <strong id="hud-tempo" class="num">0:00</strong></span>
+      <span class="hud__voce"><span data-t="hud.velocita">Velocità</span> <strong id="hud-velocita" class="num">3</strong></span>
+      <span class="hud__spazio"></span>
+      <button type="button" id="btn-pausa" class="btn btn--leggero" data-t="pausa">Pausa</button>
+      <button type="button" id="btn-schermo-intero" class="btn btn--leggero" aria-pressed="false" data-t="schermoIntero">Schermo intero</button>
+      <button type="button" id="btn-ferma" class="btn btn--leggero" data-t="ferma">Ferma</button>
+      <div class="hud__barra" aria-hidden="true"><div id="hud-barra"></div></div>
+    </div>
+
+    <div id="ov-conto" class="sovr sovr--basso" hidden>
+      <p class="sovr__grande"><span id="conto-numero" class="num">3</span></p>
+      <p data-t="conto.testo">Siediti a 50–70 cm dallo schermo. Testa ferma: segui il bersaglio solo con gli occhi.</p>
+      <p class="sovr__nota" data-t="conto.nota">Durante l'esercizio le scritte spariscono: Spazio = pausa, Esc = ferma, tocco = comandi.</p>
+    </div>
+
+    <div id="ov-pausa" class="sovr sovr--basso" hidden>
+      <p class="sovr__grande" data-t="pausa.titolo">In pausa</p>
+      <p data-t="pausa.testo">Premi Spazio per riprendere.</p>
+      <p class="sovr__azioni">
+        <button type="button" id="btn-riprendi" class="btn btn--primario" data-t="riprendi">Riprendi</button>
+        <button type="button" id="btn-ferma-pausa" class="btn btn--leggero" data-t="ferma">Ferma</button>
+      </p>
+    </div>
+
+    <div id="ov-idee" class="riposo" hidden>
+      <form id="form-idee" class="riposo__corpo" autocomplete="off">
+        <h2 data-t="idee.titolo">Il viaggio è finito!</h2>
+        <p id="domanda-idee" class="riposo__frase"></p>
+        <p>
+          <label for="nuova-idea" class="solo-lettori" data-t="idee.etichetta">La tua idea</label>
+          <input type="text" id="nuova-idea" class="input-frase" maxlength="60" spellcheck="false" autocomplete="off" placeholder="Scrivi un'idea e premi Invio" data-t-attr="placeholder=idee.segnaposto">
+        </p>
+        <p id="avviso-idee" class="aiuto" role="status"></p>
+        <ul id="elenco-idee" class="idee"></ul>
+        <p id="contatore-idee" class="aiuto" role="status"></p>
+        <p class="sovr__azioni">
+          <button type="submit" class="btn btn--leggero" data-t="idee.aggiungi">Aggiungi</button>
+          <button type="button" id="btn-idea-voce" class="btn btn--leggero" data-t="idee.voce">+1 idea detta a voce</button>
+          <button type="button" id="btn-fatto-idee" class="btn btn--primario" data-t="idee.fatto">Ho finito</button>
+        </p>
+        <p class="aiuto" data-t="idee.dopo">Dopo parte il riposo.</p>
+      </form>
+    </div>
+
+    <div id="ov-indovina" class="riposo" hidden>
+      <form id="form-frase" class="riposo__corpo" autocomplete="off">
+        <h2 data-t="frase.titolo">Indovina la frase</h2>
+        <p id="frase-aiuto"></p>
+        <p>
+          <label for="risposta-frase" class="solo-lettori" data-t="frase.etichetta">La frase che hai letto</label>
+          <input type="text" id="risposta-frase" class="input-frase" spellcheck="false" autocapitalize="none" autocorrect="off" autocomplete="off">
+        </p>
+        <p class="sovr__azioni">
+          <button type="submit" class="btn btn--primario" data-t="frase.controlla">Controlla</button>
+          <button type="button" id="btn-salta-frase" class="btn btn--leggero" data-t="frase.salta">Salta</button>
+        </p>
+      </form>
+    </div>
+
+    <div id="ov-riposo" class="riposo" hidden>
+      <div class="riposo__corpo">
+        <h2 id="riposo-titolo"></h2>
+        <p class="riposo__tempo num" id="riposo-tempo">0:00</p>
+        <p id="riposo-frase" class="riposo__frase" hidden></p>
+        <p id="riposo-testo"></p>
+        <p><button type="button" id="btn-esci-riposo" class="btn btn--leggero"></button></p>
+        <section class="dona" aria-labelledby="dona-t-riposo" hidden>
+      <div class="dona__corpo">
+        <h2 id="dona-t-riposo" class="dona__titolo" data-t="dona.titolo">Eye Gym è gratuita</h2>
+        <p data-t="dona.testo">Eye Gym è gratuita e resta gratuita. Se ti è utile e ti va, puoi fare una donazione volontaria: non sblocca nulla e l'app funziona esattamente come prima.</p>
+        <p class="dona__nota" data-t="dona.nota">Il pulsante e il QR portano a PayPal, un servizio esterno con le sue regole.</p>
+        <a class="btn btn--leggero dona__bottone" href="#" target="_blank" rel="noopener noreferrer"><span data-t="dona.bottone">Dona con PayPal</span><span class="solo-lettori" data-t="dona.nuovaScheda"> (si apre in una nuova scheda)</span></a>
+      </div>
+      <figure class="dona__qr">
+        <div class="qr"><img src="qr-donazione.svg" width="124" height="124" alt="QR code che porta alla pagina di donazione PayPal di Eye Gym" data-t-attr="alt=dona.qr.alt"></div>
+        <figcaption data-t="dona.qr">Inquadra con il telefono per donare via PayPal</figcaption>
+      </figure>
+    </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DIALOGHI ============ -->
+  <dialog id="dlg-avviso" aria-labelledby="dlg-avviso-t">
+    <form method="dialog">
+      <h2 id="dlg-avviso-t" data-t="avviso.titolo">Prima della prima sessione</h2>
+      <p data-t-html="avviso.testo">Questo è un esercizio per il movimento degli occhi. L'app <strong>non cura</strong> e <strong>non corregge</strong> miopia o altri difetti della vista, e non sostituisce una visita.</p>
+      <ul class="elenco">
+        <li data-t-html="avviso.1">Se compaiono <strong>vertigini, nausea, mal di testa o peggioramento della vista</strong>, fermati subito.</li>
+        <li data-t-html="avviso.2">Se i sintomi persistono, rivolgiti a un <strong>ortottista</strong> o a un <strong>oculista</strong>.</li>
+        <li data-t-html="avviso.3">Siediti a <strong>50–70 cm</strong> dallo schermo e tieni la testa ferma.</li>
+        <li data-t="avviso.4">Dopo ogni sessione c'è un riposo obbligatorio della stessa durata.</li>
+      </ul>
+      <div class="dialogo__azioni">
+        <button value="annulla" class="btn btn--leggero" data-t="annulla">Annulla</button>
+        <button value="ok" class="btn btn--primario" id="btn-avviso-ok" data-t="avviso.ok">Ho capito, continua</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-movimento" aria-labelledby="dlg-movimento-t">
+    <form method="dialog">
+      <h2 id="dlg-movimento-t" data-t="movimento.titolo">Movimenti ridotti attivi</h2>
+      <p data-t="movimento.testo">Il tuo dispositivo è impostato per ridurre i movimenti sullo schermo. Gli esercizi richiedono un bersaglio che si muove, in modo lento e senza effetti aggiuntivi. Vuoi partire comunque?</p>
+      <div class="dialogo__azioni">
+        <button value="annulla" class="btn btn--leggero" data-t="annulla">Annulla</button>
+        <button value="ok" class="btn btn--primario" id="btn-movimento-ok" data-t="movimento.ok">Parti comunque</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-cancella" aria-labelledby="dlg-cancella-t">
+    <form method="dialog">
+      <h2 id="dlg-cancella-t" data-t="cancella.titolo">Cancellare i progressi?</h2>
+      <p data-t="cancella.testo">Tutte le sessioni salvate in questo browser verranno eliminate e il percorso a livelli ripartirà dall'inizio. L'operazione non si può annullare.</p>
+      <div class="dialogo__azioni">
+        <button value="annulla" class="btn btn--leggero" data-t="annulla">Annulla</button>
+        <button value="ok" class="btn btn--pericolo" id="btn-cancella-ok" data-t="cancella.ok">Cancella tutto</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-azzera" aria-labelledby="dlg-azzera-t">
+    <form method="dialog">
+      <h2 id="dlg-azzera-t" data-t="azzera.titolo">Ricominciare il percorso?</h2>
+      <p data-t="azzera.testo">I livelli completati verranno azzerati e resterà sbloccato solo il primo. Le sessioni già salvate nei progressi non vengono toccate.</p>
+      <div class="dialogo__azioni">
+        <button value="annulla" class="btn btn--leggero" data-t="annulla">Annulla</button>
+        <button value="ok" class="btn btn--pericolo" id="btn-azzera-ok" data-t="azzera.ok">Ricomincia</button>
+      </div>
+    </form>
+  </dialog>
+
+  <p id="annunci" class="solo-lettori" role="status" aria-live="polite"></p>
+
+  <script src="testi.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

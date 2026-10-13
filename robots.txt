@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eniandreiacob-max.github.io/eye-gym/sitemap.xml
